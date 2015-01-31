@@ -19,7 +19,7 @@ def extraerData(archivo, fecha=None, label=listaEnc, time=0.2, values=True):
 
     #se leen los archivos csv creandose una lista de tablas
     tablas = []
-    for x in archivos:
+    for x in archivo:
         datos = pd.read_csv(x, names=label, header=0,)
         tablas.append(datos)
     return tablas
