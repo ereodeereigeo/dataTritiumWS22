@@ -3,14 +3,14 @@ import os
 import glob
 
 def lista_archivos():
-    
+
     lista = glob.glob('*.csv')
-    for i in xrange(0,len(lista)-1):
-        if not 'WSlog' in lista[i]:
-            del lista[i]
-        else:
-            return lista
-        
+    lista_nueva = []
+    for i in xrange(len(lista)-1):
+        if 'WSlog' in lista[i]:
+            lista_nueva.append(lista[i])
+    return lista_nueva
+
 def obtener_archivos(directorio , fecha=None):
 
     #obtenemos el path completo actual
@@ -25,7 +25,7 @@ def obtener_archivos(directorio , fecha=None):
         lista_dir_act = directorio_actual.split('\ ')
     else:
         lista_dir_act = [directorio]
-        
+
     #verificamos si los archivos están en el mismo directorio del módulo
     if directorio == lista_dir_act[-1]:
 
@@ -35,7 +35,7 @@ def obtener_archivos(directorio , fecha=None):
         return nombres_archivos
 
     #si no, probamos si está en una carpeta dentro del directorio actual
-    elif os.path.exists(directorio): 
+    elif os.path.exists(directorio):
 
         os.chdir(directorio) #y si está entramos a esa carpeta
 
@@ -43,10 +43,10 @@ def obtener_archivos(directorio , fecha=None):
         nombres_archivos = lista_archivos()
         nombres_archivos.sort()
         return nombres_archivos
-        
+
     else:
         return '''Error, ingrese el directorio completo:
-                
-    linux: '/home/user/.../carpeta' 
-                
-    windows: 'C:\Usuario\Escritorio\Carpeta' '''        
+
+    linux: '/home/user/.../carpeta'
+
+    windows: 'C:\Usuario\Escritorio\Carpeta' '''
