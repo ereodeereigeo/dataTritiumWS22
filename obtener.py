@@ -4,11 +4,23 @@ import glob
 
 def lista_archivos():
 
+    #crear una lista con los nombres de los archivos
+    #ubicados en el directorio actual
     lista = glob.glob('*.csv')
+
+    #creamos una nueva lista para no mutar la lista al iterar y borrar
+    #lo que creó el bug que al haber 2 elementos no generaba la lista
+    #correctamente
     lista_nueva = []
-    for i in xrange(len(lista)-1):
+
+    #iteramos dentro de la lista para ver si posee la palabra
+    # 'WSlog' que generan todos los archivos guardados con el
+    #programa del controlador WaveSculptor 22, si no la posee
+    #no se incluye el archivo posteriormente
+    for i in xrange(len(lista)):
         if 'WSlog' in lista[i]:
             lista_nueva.append(lista[i])
+    lista_nueva.sort()
     return lista_nueva
 
 def obtener_archivos(directorio , fecha=None):
@@ -31,7 +43,6 @@ def obtener_archivos(directorio , fecha=None):
 
         #añadimos los nombres de los archivos a una lista
         nombres_archivos = lista_archivos()
-        nombres_archivos.sort()
         return nombres_archivos
 
     #si no, probamos si está en una carpeta dentro del directorio actual
@@ -41,7 +52,6 @@ def obtener_archivos(directorio , fecha=None):
 
         #y añadiremos los nombres de los archivos a una lista
         nombres_archivos = lista_archivos()
-        nombres_archivos.sort()
         return nombres_archivos
 
     else:
