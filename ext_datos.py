@@ -15,11 +15,19 @@ listaEnc = ['time', 'errors', 'limiters', 'currentSP', \
 def extraerData(archivo, fecha=None, label=listaEnc, time=0.2, values=True):
 
     #se crea una lista con los nombres de archivos del directorio indicado
-    lista = ob.obtener_archivos(archivo, fecha = fecha)
+    lista = ob.obtener_archivos(archivo, fecha)
 
     #se leen los archivos csv creandose una lista de tablas
     tablas = []
-    for x in lista:
-        datos = pd.read_csv(x, names=label, header=0,)
-        tablas.append(datos)
+    for nombres in lista:
+
+        #lee los datos del archivo csv
+        datos = pd.read_csv(nombres, names=label, header=0)
+        dia = nombres[6:16]
+        dia_slices = dia.replace('-', '/')
+        if fecha == None:
+            tablas.append(datos)
+        elif fecha == dia or fecha == dia_slices:
+            tablas.append(datos)
+
     return tablas
