@@ -22,7 +22,7 @@ def extraer_data(archivo, fecha=None, label=listaEnc, time=0.2, values=True):
     for nombres in lista:
 
         #lee los datos del archivo csv
-        datos = pd.read_csv(nombres, names=label, header=0, index_col = 0)
+        datos = pd.read_csv(nombres, names=label, header=0, index_col = 0, parse_dates = True)
         #fecha_indice_inf = nombres[6:16]+' '+datos['time'].head(1).values[0]
         #fecha_indice_sup = nombres[6:16]+' '+datos['time'].tail(1).values[0]
         #serie_tiempo = pd.date_range(fecha_indice_inf, fecha_indice_sup, freq='200ms')
