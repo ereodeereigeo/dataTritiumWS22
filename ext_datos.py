@@ -12,7 +12,7 @@ listaEnc = ['time', 'errors', 'limiters', 'currentSP', \
 'phasecTemp', 'cantranserr', 'canrecerr', 'slipSpeed']
 
 #definimos label como opción oculta para acotar los datos extraidos
-def extraerData(archivo, fecha=None, label=listaEnc, time=0.2, values=True):
+def extraer_data(archivo, fecha=None, label=listaEnc, time=0.2, values=True):
 
     #se crea una lista con los nombres de archivos del directorio indicado
     lista = ob.obtener_archivos(archivo, fecha)
@@ -22,8 +22,10 @@ def extraerData(archivo, fecha=None, label=listaEnc, time=0.2, values=True):
     for nombres in lista:
 
         #lee los datos del archivo csv
-        datos = pd.read_csv(nombres, names=label, header=0)
-
+        datos = pd.read_csv(nombres, names=label, header=0, index_col = 0)
+        #fecha_indice_inf = nombres[6:16]+' '+datos['time'].head(1).values[0]
+        #fecha_indice_sup = nombres[6:16]+' '+datos['time'].tail(1).values[0]
+        #serie_tiempo = pd.date_range(fecha_indice_inf, fecha_indice_sup, freq='200ms')
 
         if fecha == None:
             tablas.append(datos)
