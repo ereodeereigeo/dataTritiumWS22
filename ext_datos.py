@@ -26,16 +26,11 @@ def extraer_data(archivo, fecha=None, label=listaEnc, time=0.2, values=True):
         fecha_indice_inf = nombres[6:16]+' '+nombres[17:19]+':'+nombres[20:22]+':'+nombres[23:25]
         periodo = len(datos.index)
         tiempo_nuevo=pd.date_range(fecha_indice_inf,periods=periodo, freq='200ms', name = 'time')
-        dataFrame = pd.DataFrame(datos.values, index = tiempo_nuevo,columns =['errors', 'limiters', 'currentSP', \
-        'velocitySP', 'idcSP', 'miscSP', 'busVoltage','busCurrent',\
-        'velocityMs', 'motorRpm', 'pcCurrent', 'pbCurrent', 'odometer',\
-        'busCharge', 'bemf','voutD', 'voutQ', 'ioutD', 'ioutQ', '15v',\
-        '1.9v', '3.3v', 'motorTemp', 'dspTemp', 'phaseaTemp', 'phasebTemp',\
-        'phasecTemp', 'cantranserr', 'canrecerr', 'slipSpeed'] )
-        dataFrame = dataFrame.convert_objects(convert_numeric=True)
+        datos.index = tiempo_nuevo
+        datos = datos.convert_objects(convert_numeric=True)
         if fecha == None:
-            tablas.append(dataFrame)
+            tablas.append(datos)
         elif str(fecha) == str(nombres[6:16]):
-            tablas.append(dataFrame)
+            tablas.append(datos)
 
     return tablas
