@@ -23,7 +23,7 @@ def lista_archivos():
     lista_nueva.sort()
     return lista_nueva
 
-def obtener_archivos(directorio , fecha=None):
+def obtener_archivos(directorio, fecha = None):
 
     #obtenemos el path completo actual
     directorio_actual = os.getcwd()
