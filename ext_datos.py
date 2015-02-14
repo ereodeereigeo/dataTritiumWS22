@@ -14,23 +14,40 @@ listaEnc = ['time', 'errors', 'limiters', 'currentSP', \
 #definimos label como opción oculta para acotar los datos extraidos
 def extraer_data(archivo, fecha=None, label=listaEnc, time=0.2, values=True):
 
-    #se crea una lista con los nombres de archivos del directorio indicado
-    lista = ob.obtener_archivos(archivo, fecha)
+	#se crea una lista con los nombres de archivos del directorio indicado
+	lista = ob.obtener_archivos(archivo, fecha)
 
-    #se leen los archivos csv creandose una lista de tablas
-    tablas = []
-    for nombres in lista:
+	#se leen los archivos csv creandose una lista de tablas
+	tablas = []
+	for nombres in lista:
 
-        #lee los datos del archivo csv
-        datos = pd.read_csv(nombres, names=label, header=0, index_col = 0, parse_dates = True)
-        fecha_indice_inf = nombres[6:16]+' '+nombres[17:19]+':'+nombres[20:22]+':'+nombres[23:25]
-        periodo = len(datos.index)
-        tiempo_nuevo=pd.date_range(fecha_indice_inf,periods=periodo, freq='200ms', name = 'time')
-        datos.index = tiempo_nuevo
-        datos = datos.convert_objects(convert_numeric=True)
-        if fecha == None:
-            tablas.append(datos)
-        elif str(fecha) == str(nombres[6:16]):
-            tablas.append(datos)
+		#lee los datos del archivo csv
+		datos = pd.read_csv(nombres, names=label, header=0, index_col = 0, parse_dates = True)
+		count = 1
+		for i in range(0,5):
+			if datos.index[i]==datos.index[i+1]:
+				count+=1
+			else:
+				break
+		if count==5:
+			fecha_indice_inf = nombres[6:16]+' '+nombres[17:19]+':'+nombres[20:22]+':'+nombres[23:25]
+		elif count == 4:
+			fecha_indice_inf = nombres[6:16]+' '+nombres[17:19]+':'+nombres[20:22]+':'+nombres[23:25]+'.2'
+		elif count == 3:
+			fecha_indice_inf = nombres[6:16]+' '+nombres[17:19]+':'+nombres[20:22]+':'+nombres[23:25]+'.4'
+		elif count == 2:
+			fecha_indice_inf = nombres[6:16]+' '+nombres[17:19]+':'+nombres[20:22]+':'+nombres[23:25]+'.6'
+		elif count == 1:
+			fecha_indice_inf = nombres[6:16]+' '+nombres[17:19]+':'+nombres[20:22]+':'+nombres[23:25]+'.8'
+		else:
+			print "error"
+		periodo = len(datos.index)
+		tiempo_nuevo=pd.date_range(fecha_indice_inf,periods=periodo, freq='200ms', name = 'time')
+		datos.index = tiempo_nuevo
+		datos = datos.convert_objects(convert_numeric=True)
+		if fecha == None:
+			tablas.append(datos)
+		elif str(fecha) == str(nombres[6:16]):
+			tablas.append(datos)
 
-    return tablas
+	return tablas
