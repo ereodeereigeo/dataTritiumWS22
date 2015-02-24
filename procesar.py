@@ -11,11 +11,11 @@ def sep(data):
 	motor1 = []
 	motor2 = []
 	for tablas in data:
-		
+
 		'''explora los dataframes guardados y evalua
 		si corresponde al motor 1 o al motor2
 		esto se obtiene por la id de los errores
-		el motor 1 muestra mensajes con un codigo 
+		el motor 1 muestra mensajes con un codigo
 		de 0x0 hasta 0x10 y de 0x40 a 0x50 muestra
 		el del otro motor y entrega dos listas de
 		dataframes'''
@@ -34,13 +34,13 @@ def concatenar(motor1,motor2):
 	y resamplea cada 200 ms tomando un promedio de los datos
 	repetidos"""
 	motor1total = pd.concat(motor1)
-	
+
 	motor1total = motor1total.resample('200ms')
-	
+
 	motor2total = pd.concat(motor2)
-	
+
 	motor2total = motor2total.resample('200ms')
-	
+
 	return motor1total,motor2total
 
 def juntar(motor1total, motor2total):
