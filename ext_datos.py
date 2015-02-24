@@ -45,6 +45,8 @@ def extraer_data(archivo, fecha=None, label=listaEnc, time=0.2, values=True):
 		tiempo_nuevo=pd.date_range(fecha_indice_inf,periods=periodo, freq='200ms', name = 'time')
 		datos.index = tiempo_nuevo
 		datos = datos.convert_objects(convert_numeric=True)
+		datos = datos.drop(datos[['miscSP','velocityMs','odometer','busCharge','15v',\
+		'1.9v','3.3v','phaseaTemp','phasebTemp','cantranserr', 'canrecerr', 'slipSpeed']],1)
 		if fecha == None:
 			tablas.append(datos)
 		elif str(fecha) == str(nombres[6:16]):
